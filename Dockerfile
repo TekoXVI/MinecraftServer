@@ -13,10 +13,9 @@ RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup
 
 EXPOSE 19132/udp
 
-#RAILWAY_VOLUME_NAME /data
+VOLUME /data
 
-#WORKDIR /data
-#RAILWAY_VOLUME_MOUNT_PATH /data
+WORKDIR /data
 
 RUN docker volume create mc-volume
 RUN docker run -d -it --name mc-server -e EULA=TRUE -p 19132:19132/udp -v mc-volume:/data itzg/minecraft-bedrock-server
