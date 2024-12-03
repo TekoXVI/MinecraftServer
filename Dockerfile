@@ -13,11 +13,10 @@ RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup
 
 EXPOSE 19132/udp
 
-#VOLUME ["/data"]
-volume create mc-volume
-run -d -it --name mc-server -e EULA=TRUE -p 19132:19132/udp -v mc-volume:/data itzg/minecraft-bedrock-server
+RAILWAY_VOLUME_NAME /data
 
-WORKDIR /data
+#WORKDIR /data
+RAILWAY_VOLUME_MOUNT_PATH /data
 
 ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
 
