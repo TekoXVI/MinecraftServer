@@ -14,7 +14,8 @@ RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup
 EXPOSE 19132/udp
 
 #VOLUME ["/data"]
-RUN --rm -v bedrock:/data alpine chown 1000:1000 /data
+volume create mc-volume
+run -d -it --name mc-server -e EULA=TRUE -p 19132:19132/udp -v mc-volume:/data itzg/minecraft-bedrock-server
 
 WORKDIR /data
 
