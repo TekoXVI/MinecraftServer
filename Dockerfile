@@ -13,7 +13,7 @@ RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup
 
 EXPOSE 19132/udp
 
-VOLUME /data
+#VOLUME /data
 
 WORKDIR /data
 
