@@ -14,6 +14,7 @@ RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup
 EXPOSE 19132/udp
 
 #VOLUME ["/data"]
+RUN --rm -v bedrock:/data alpine chown 1000:1000 /data
 
 WORKDIR /data
 
