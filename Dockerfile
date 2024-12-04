@@ -7,7 +7,7 @@ ARG TARGETOS
 ARG TARGETARCH
 ARG TARGETVARIANT
 
-RUN chmod +x /build/install-packages
+#RUN chmod +x /build/install-packages
 RUN --mount=target=/build,source=build /build/install-packages
 
 ARG BOX64_PACKAGE=box64
