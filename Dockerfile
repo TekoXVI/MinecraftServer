@@ -18,12 +18,6 @@ RUN chmod +x /build/install-packages
 RUN /build/install-packages
 
 ARG BOX64_PACKAGE=box64
-# COPY build/setup-arm64 /build/setup-arm64
-# RUN chmod +x /build/setup-arm64
-# COPY --chmod=755 build/setup-arm64 /build/setup-arm64
-# RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
-# RUN BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
-# RUN --mount=target=/build,source=build sh -c 'chmod +x /build/setup-arm64 && BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64'
 RUN --mount=type=cache,id=s/658b4651-81fa-421c-a777-6b48ca2f63f4-build,target=/build sh -c 'chmod +x /build/setup-arm64 && BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64' 
 
 WORKDIR /data
@@ -57,11 +51,6 @@ ARG MC_SERVER_RUNNER_VERSION=1.12.3
 RUN easy-add --var os=${TARGETOS} --var arch=${TARGETARCH}${TARGETVARIANT} \
   --var version=${MC_SERVER_RUNNER_VERSION} --var app=mc-server-runner --file {{.app}} \
   --from ${GITHUB_BASEURL}/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_{{.os}}_{{.arch}}.tar.gz
-
-# COPY *.sh /opt/
-
-# COPY property-definitions.json /etc/bds-property-definitions.json
-# COPY bin/* /usr/local/bin/
 
 # Available versions listed at
 # https://minecraft.wiki/w/Bedrock_Edition_1.11.0
