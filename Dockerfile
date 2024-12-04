@@ -1,3 +1,4 @@
+#!/bin/bash
 FROM debian
 
 # hook into docker BuildKit --platform support
