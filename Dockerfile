@@ -55,6 +55,7 @@ RUN easy-add --var os=${TARGETOS} --var arch=${TARGETARCH}${TARGETVARIANT} \
   --from ${GITHUB_BASEURL}/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_{{.os}}_{{.arch}}.tar.gz
 
 COPY *.sh /opt/
+RUN chmod +x /opt/bedrock-entry.sh 
 
 COPY property-definitions.json /etc/bds-property-definitions.json
 COPY bin/* /usr/local/bin/
