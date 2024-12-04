@@ -12,11 +12,9 @@ RUN chmod +x /build/install-packages
 RUN /build/install-packages
 
 ARG BOX64_PACKAGE=box64
-# RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
-RUN --mount=type=bind,source=build,target=/build \
-    chmod +x /build/setup-arm64 
-RUN --mount=type=bind,source=build,target=/build \
-    BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
+
+RUN chmod +x /build/setup-arm64
+RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
 
 EXPOSE 19132/udp
 
