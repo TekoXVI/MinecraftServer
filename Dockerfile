@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 FROM debian
 
 # hook into docker BuildKit --platform support
@@ -7,26 +7,15 @@ ARG TARGETOS
 ARG TARGETARCH
 ARG TARGETVARIANT
 
-# Copy the scripts first
-COPY *.sh /opt/ 
-RUN chmod +x /opt/bedrock-entry.sh
-COPY property-definitions.json /etc/bds-property-definitions.json
-COPY bin/* /usr/local/bin/
-
-COPY build/install-packages /build/install-packages 
-RUN chmod +x /build/install-packages
-RUN /build/install-packages
+RUN --mount=target=/build,source=build /build/install-packages
 
 ARG BOX64_PACKAGE=box64
-# COPY build/setup-arm64 /build/setup-arm64
-# RUN --mount=type=cache,id=s/658b4651-81fa-421c-a777-6b48ca2f63f4-build,target=/build sh -c 'chmod +x /build/setup-arm64 && BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64' 
-COPY build/* /opt/  # Copy all files from the build directory to /opt/
+RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
 
-# RUN ls -l /opt/  # Add this line before the RUN command with the cache mount
-RUN --mount=type=cache,id=s/658b4651-81fa-421c-a777-6b48ca2f63f4-build,target=/build sh -c ' \
-    cp /opt/setup-arm64 /build/ && \
-    chmod +x /build/setup-arm64 && \
-    BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64'
+EXPOSE 19132/udp
+
+#VOLUME /data
+
 WORKDIR /data
 
 ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
@@ -58,6 +47,11 @@ ARG MC_SERVER_RUNNER_VERSION=1.12.3
 RUN easy-add --var os=${TARGETOS} --var arch=${TARGETARCH}${TARGETVARIANT} \
   --var version=${MC_SERVER_RUNNER_VERSION} --var app=mc-server-runner --file {{.app}} \
   --from ${GITHUB_BASEURL}/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_{{.os}}_{{.arch}}.tar.gz
+
+COPY *.sh /opt/
+
+COPY property-definitions.json /etc/bds-property-definitions.json
+COPY bin/* /usr/local/bin/
 
 # Available versions listed at
 # https://minecraft.wiki/w/Bedrock_Edition_1.11.0
