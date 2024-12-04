@@ -16,12 +16,10 @@ COPY build/install-packages /build/install-packages
 RUN chmod +x /build/install-packages
 RUN /build/install-packages
 
-# RUN chmod +x /build/install-packages
-# RUN --mount=target=/build,source=build /build/install-packages
-COPY *.sh /opt/
 ARG BOX64_PACKAGE=box64
-COPY build/setup-arm64 /build/setup-arm64
-RUN chmod +x /build/setup-arm64
+# COPY build/setup-arm64 /build/setup-arm64
+# RUN chmod +x /build/setup-arm64
+COPY --chmod=755 build/setup-arm64 /build/setup-arm64
 RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
 
 EXPOSE 19132/udp
