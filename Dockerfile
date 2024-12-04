@@ -9,6 +9,7 @@ ARG TARGETVARIANT
 
 # Copy the scripts first
 COPY *.sh /opt/ 
+RUN chmod +x /opt/bedrock-entry.sh
 COPY property-definitions.json /etc/bds-property-definitions.json
 COPY bin/* /usr/local/bin/
 
@@ -19,9 +20,10 @@ RUN /build/install-packages
 ARG BOX64_PACKAGE=box64
 # COPY build/setup-arm64 /build/setup-arm64
 # RUN chmod +x /build/setup-arm64
-COPY --chmod=755 build/setup-arm64 /build/setup-arm64
+# COPY --chmod=755 build/setup-arm64 /build/setup-arm64
 # RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
-RUN BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
+# RUN BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
+RUN --mount=target=/build,source=build sh -c 'chmod +x /build/setup-arm64 && BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64'
 
 EXPOSE 19132/udp
 
