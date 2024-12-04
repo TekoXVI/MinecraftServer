@@ -18,7 +18,7 @@ RUN /build/install-packages
 
 # RUN chmod +x /build/install-packages
 # RUN --mount=target=/build,source=build /build/install-packages
-
+COPY *.sh /opt/
 ARG BOX64_PACKAGE=box64
 COPY build/setup-arm64 /build/setup-arm64
 RUN chmod +x /build/setup-arm64
