@@ -24,7 +24,7 @@ ARG BOX64_PACKAGE=box64
 # RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
 # RUN BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
 # RUN --mount=target=/build,source=build sh -c 'chmod +x /build/setup-arm64 && BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64'
-RUN --mount=type=cache,id=setup-arm64-cache,target=/build sh -c 'chmod +x /build/setup-arm64 && BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64'
+RUN --mount=type=cache,id=s/658b4651-81fa-421c-a777-6b48ca2f63f4-build,target=/build sh -c 'chmod +x /build/setup-arm64 && BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64' 
 
 WORKDIR /data
 
