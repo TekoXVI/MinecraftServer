@@ -21,6 +21,14 @@ ARG BOX64_PACKAGE=box64
 # COPY build/setup-arm64 /build/setup-arm64
 # RUN --mount=type=cache,id=s/658b4651-81fa-421c-a777-6b48ca2f63f4-build,target=/build sh -c 'chmod +x /build/setup-arm64 && BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64' 
 COPY build/* /opt/  # Copy all files from the build directory to /opt/
+
+# Temporary RUN command for debugging
+RUN sh -c ' \
+    ls -l / && \  # List files in the root directory
+    ls -l build/ && \  # List files in the build directory
+    ls -l /opt/  # List files in the /opt/ directory
+'
+
 RUN ls -l /opt/  # Add this line before the RUN command with the cache mount
 RUN --mount=type=cache,id=s/658b4651-81fa-421c-a777-6b48ca2f63f4-build,target=/build sh -c ' \
     cp /opt/setup-arm64 /build/ && \
