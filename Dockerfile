@@ -7,7 +7,12 @@ ARG TARGETOS
 ARG TARGETARCH
 ARG TARGETVARIANT
 
-RUN chmod +x /build/install-packages
+# Copy the scripts first
+COPY *.sh /opt/ 
+COPY property-definitions.json /etc/bds-property-definitions.json
+COPY bin/* /usr/local/bin/
+
+# RUN chmod +x /build/install-packages
 RUN --mount=target=/build,source=build /build/install-packages
 
 ARG BOX64_PACKAGE=box64
@@ -49,10 +54,10 @@ RUN easy-add --var os=${TARGETOS} --var arch=${TARGETARCH}${TARGETVARIANT} \
   --var version=${MC_SERVER_RUNNER_VERSION} --var app=mc-server-runner --file {{.app}} \
   --from ${GITHUB_BASEURL}/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_{{.os}}_{{.arch}}.tar.gz
 
-COPY *.sh /opt/
+# COPY *.sh /opt/
 
-COPY property-definitions.json /etc/bds-property-definitions.json
-COPY bin/* /usr/local/bin/
+# COPY property-definitions.json /etc/bds-property-definitions.json
+# COPY bin/* /usr/local/bin/
 
 # Available versions listed at
 # https://minecraft.wiki/w/Bedrock_Edition_1.11.0
