@@ -12,7 +12,7 @@ COPY *.sh /opt/
 COPY property-definitions.json /etc/bds-property-definitions.json
 COPY bin/* /usr/local/bin/
 
-# RUN chmod +x /build/install-packages
+RUN chmod +x /build/install-packages
 RUN --mount=target=/build,source=build /build/install-packages
 
 ARG BOX64_PACKAGE=box64
