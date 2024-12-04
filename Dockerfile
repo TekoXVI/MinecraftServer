@@ -7,7 +7,6 @@ ARG TARGETARCH
 ARG TARGETVARIANT
 
 RUN --mount=target=/build,source=build /build/install-packages
-RUN chmod +x /build/install-packages
 
 ARG BOX64_PACKAGE=box64
 RUN --mount=target=/build,source=build BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64
@@ -17,9 +16,6 @@ EXPOSE 19132/udp
 #VOLUME /data
 
 WORKDIR /data
-
-#RUN docker volume create mc-volume
-#RUN docker run -d -it --name mc-server -e EULA=TRUE -p 19132:19132/udp -v mc-volume:/data itzg/minecraft-bedrock-server
 
 ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
 
