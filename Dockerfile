@@ -21,6 +21,7 @@ ARG BOX64_PACKAGE=box64
 # COPY build/setup-arm64 /build/setup-arm64
 # RUN --mount=type=cache,id=s/658b4651-81fa-421c-a777-6b48ca2f63f4-build,target=/build sh -c 'chmod +x /build/setup-arm64 && BOX64_PACKAGE=$BOX64_PACKAGE /build/setup-arm64' 
 COPY *.sh /opt/ 
+RUN ls -l /opt/  # Add this line before the RUN command with the cache mount
 RUN --mount=type=cache,id=s/658b4651-81fa-421c-a777-6b48ca2f63f4-build,target=/build sh -c ' \
     cp /opt/setup-arm64 /build/ && \
     chmod +x /build/setup-arm64 && \
